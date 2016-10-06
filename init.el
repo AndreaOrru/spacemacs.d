@@ -217,7 +217,7 @@ values."
    ;; in all non-asynchronous sources. If set to `source', preserve individual
    ;; source settings. Else, disable fuzzy matching in all sources.
    ;; (default 'always)
-   dotspacemacs-helm-use-fuzzy 'always
+   dotspacemacs-helm-use-fuzzy nil
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
    dotspacemacs-enable-paste-transient-state nil
@@ -295,7 +295,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'changed
    ))
 
 (defun dotspacemacs/user-init ()
@@ -324,11 +324,26 @@ you should place your code here."
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-scroll-amount '(          2
                                    ((shift) . 1)))
+  ; Minimal NeoTree style:
+  (setq neo-theme 'arrow)
 
   ; Copy/kill whole line if region is not selected:
   (whole-line-or-region-mode t)
   (diminish 'whole-line-or-region-mode)
   (global-set-key (kbd "C-w") 'whole-line-or-region-kill-region)
+
+  ; Expand/contract region semantically:
+  (setq expand-region-fast-keys-enabled nil)
+  (setq expand-region-smart-cursor t)
+  (global-set-key (kbd "C-.") 'er/expand-region)
+  (global-set-key (kbd "C-,") 'er/contract-region)
+
+  ; Multiple cursors shortcuts:
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+
+  ; Better search with Helm Swoop:
+  (global-set-key (kbd "C-s") 'spacemacs/helm-swoop-region-or-symbol)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
