@@ -202,7 +202,7 @@ values."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'cache
+   dotspacemacs-auto-save-file-location nil
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
@@ -305,6 +305,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ; Keep .spacemacs.d/init.el free of custom variables:
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (when (file-exists-p custom-file) (load custom-file))
   )
@@ -316,12 +317,15 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  ; No curves in the powerline:
   (setq powerline-default-separator 'utf-8)
 
+  ; Slower scrolling:
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-scroll-amount '(          2
                                    ((shift) . 1)))
 
+  ; Copy/kill whole line if region is not selected:
   (whole-line-or-region-mode t)
   (diminish 'whole-line-or-region-mode)
   (global-set-key (kbd "C-w") 'whole-line-or-region-kill-region)
