@@ -72,11 +72,11 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(gotham-theme whole-line-or-region)
+   dotspacemacs-additional-packages '(color-theme-sanityinc-tomorrow whole-line-or-region)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(yasnippet)
+   dotspacemacs-excluded-packages '(auto-yasnippet helm-c-yasnippet php-auto-yasnippets yasnippet)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -144,7 +144,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(gotham)
+   dotspacemacs-themes '(sanityinc-tomorrow-night)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -343,7 +343,8 @@ you should place your code here."
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 
   ; Better search with Helm Swoop:
-  (global-set-key (kbd "C-s") 'spacemacs/helm-swoop-region-or-symbol)
+  (global-set-key (kbd "C-s") 'helm-swoop)
+  (global-set-key (kbd "C-M-s") 'spacemacs/helm-swoop-region-or-symbol)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
