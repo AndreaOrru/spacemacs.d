@@ -316,13 +316,13 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  ; No curves in the powerline:
-  (setq powerline-default-separator 'utf-8)
 
   ; Slower scrolling:
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-scroll-amount '(          2
                                    ((shift) . 1)))
+  ; No curves in the powerline:
+  (setq powerline-default-separator 'utf-8)
   ; Minimal NeoTree style:
   (setq neo-theme 'arrow)
 
@@ -341,9 +341,16 @@ you should place your code here."
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 
-  ; Better search with Helm Swoop:
+  ; Better search with Helm Swoop and other Helm goodness:
   (global-set-key (kbd "C-s") 'helm-swoop)
   (global-set-key (kbd "C-M-s") 'spacemacs/helm-swoop-region-or-symbol)
+  (global-set-key (kbd "C-r") 'helm-resume)
+  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+
+  ; Use Company in Python inferior mode:
+  (spacemacs|add-company-hook inferior-python-mode)
+  (setq python-shell-interpreter "python3")         ; Use Python 3.
+  (setq python-shell-completion-native-enable nil)  ; TEMPORARY FIX.
 
   ; Open ToDo list after init:
   (find-file "~/todo.org")
