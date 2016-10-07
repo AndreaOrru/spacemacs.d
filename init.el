@@ -340,6 +340,7 @@ you should place your code here."
   ; Multiple cursors shortcuts:
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
 
   ; Better search with Helm Swoop and other Helm goodness:
   (global-set-key (kbd "C-s") 'helm-swoop)
