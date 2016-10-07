@@ -319,12 +319,12 @@ you should place your code here."
 
   ; Slower scrolling:
   (setq mouse-wheel-progressive-speed nil)
-  (setq mouse-wheel-scroll-amount '(          2
-                                   ((shift) . 1)))
-  ; No curves in the powerline:
-  (setq powerline-default-separator 'utf-8)
-  ; Minimal NeoTree style:
-  (setq neo-theme 'arrow)
+  (setq mouse-wheel-scroll-amount '(           2
+                                    ((shift) . 1)))
+
+  (setq neo-theme 'arrow)                   ; Minimal NeoTree style.
+  (setq powerline-default-separator 'utf-8) ; No curves in the powerline.
+  (setq require-final-newline t)
 
   ; Copy/kill whole line if region is not selected:
   (whole-line-or-region-mode t)
