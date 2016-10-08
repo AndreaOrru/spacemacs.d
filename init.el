@@ -59,13 +59,13 @@ values."
      restclient
      search-engine
      semantic
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      shell-scripts
      spotify
      syntax-checking
      version-control
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -324,6 +324,7 @@ you should place your code here."
 
   (setq neo-theme 'arrow)                   ; Minimal NeoTree style.
   (setq powerline-default-separator 'utf-8) ; No curves in the powerline.
+  (setq git-gutter-fr+-side 'left-fringe)   ; Show Git diff indicators on the left.
   (setq require-final-newline t)
 
   ; Copy/kill whole line if region is not selected:
