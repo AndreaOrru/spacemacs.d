@@ -157,7 +157,7 @@ values."
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
    ;; (default "M-m")
-   dotspacemacs-emacs-leader-key "M-m"
+   dotspacemacs-emacs-leader-key "M-SPC"
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
    dotspacemacs-major-mode-leader-key ","
@@ -166,7 +166,7 @@ values."
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
    ;; (default "SPC")
-   dotspacemacs-emacs-command-key "SPC"
+   dotspacemacs-emacs-command-key "M-SPC"
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs C-i, TAB and C-m, RET.
    ;; Setting it to a non-nil value, allows for separate commands under <C-i>
@@ -317,15 +317,17 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  (setq powerline-default-separator 'utf-8) ; No curves in the powerline.
+  (setq neo-theme 'arrow)                   ; Minimal NeoTree style.
+  (setq git-gutter-fr+-side 'left-fringe)   ; Show Git diff indicators on the left.
+  (fringe-mode '(nil . 0))                  ; Disable fringe on the right.
+
   ; Slower scrolling:
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-scroll-amount '(           2
                                     ((shift) . 1)))
-
-  (setq neo-theme 'arrow)                   ; Minimal NeoTree style.
-  (setq powerline-default-separator 'utf-8) ; No curves in the powerline.
-  (setq git-gutter-fr+-side 'left-fringe)   ; Show Git diff indicators on the left.
-  (setq require-final-newline t)
+  ; M-SPC is my leader, so use M-m to delete multiple spaces:
+  (global-set-key (kbd "M-m") 'just-one-space)
 
   ; Copy/kill whole line if region is not selected:
   (whole-line-or-region-mode t)
@@ -354,8 +356,7 @@ you should place your code here."
   (setq python-shell-interpreter "python3")         ; Use Python 3.
   (setq python-shell-completion-native-enable nil)  ; TEMPORARY FIX.
 
-  ; Open ToDo list after init:
-  (find-file "~/todo.org")
+  (find-file "~/todo.org")  ; Open ToDo list after init.
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
