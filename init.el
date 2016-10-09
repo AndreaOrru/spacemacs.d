@@ -39,7 +39,7 @@ values."
      asm
      auto-completion
      better-defaults
-     c-c++
+     (c-c++ :variables c-c++-enable-clang-support t)
      colors
      dash
      emacs-lisp
