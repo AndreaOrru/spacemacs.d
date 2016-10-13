@@ -41,6 +41,7 @@ values."
      better-defaults
      (c-c++ :variables c-c++-enable-clang-support t)
      colors
+     common-lisp
      dash
      emacs-lisp
      git
