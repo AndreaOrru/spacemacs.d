@@ -355,8 +355,6 @@ you should place your code here."
   (global-set-key (kbd "C-r") 'helm-resume)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
-  ; Use Company in Python inferior mode:
-  (setq python-shell-interpreter "python3")         ; Use Python 3.
   (setq python-shell-completion-native-enable nil)  ; TEMPORARY FIX.
 
   (find-file "~/todo.org")  ; Open ToDo list after init.
