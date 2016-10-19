@@ -132,11 +132,9 @@ values."
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
-   ;; `recents' `bookmarks' `projects' `agenda' `todos'.
-   ;; Example for 5 recent files and 7 projects: '((recents . 5) (projects . 7))
+   ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   ;; (default nil)
    dotspacemacs-startup-lists '()
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
@@ -308,6 +306,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+
   ; Keep .spacemacs.d/init.el free of custom variables:
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (when (file-exists-p custom-file) (load custom-file))
@@ -355,9 +354,16 @@ you should place your code here."
   (global-set-key (kbd "C-r") 'helm-resume)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
-  (setq python-shell-completion-native-enable nil)  ; TEMPORARY FIX.
+  ; Configuration for C-derived modes:
+  (add-hook 'c-mode-common-hook '(lambda()
+                                   (c-set-style "ellemtel")
+                                   (setq c-basic-offset 4)
+                                   (c-set-offset 'innamespace 0)
+                                   (c-set-offset 'access-label '/)))
+  ; Python shell temporary fix (upstream bug):
+  (setq python-shell-completion-native-enable nil)
 
-  (find-file "~/todo.org")  ; Open ToDo list after init.
+  (find-file "~/todo.org")  ; Open todo list after init.
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
