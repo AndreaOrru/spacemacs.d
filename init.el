@@ -54,7 +54,6 @@ values."
      nlinum
      org
      osx
-     php
      python
      react
      restclient
