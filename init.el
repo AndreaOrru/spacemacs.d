@@ -361,6 +361,7 @@ you should place your code here."
                                    (c-set-offset 'access-label '/)))
   ; Python shell temporary fix (upstream bug):
   (setq python-shell-completion-native-enable nil)
+  (setq flycheck-python-pycompile-executable "python3")
 
   (find-file "~/todo.org")  ; Open todo list after init.
   )
