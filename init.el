@@ -36,46 +36,36 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     asm
+     helm
      auto-completion
      better-defaults
-     (c-c++ :variables c-c++-enable-clang-support t)
-     colors
-     common-lisp
      dash
      emacs-lisp
      git
      github
-     helm
-     html
-     imenu-list
-     javascript
-     markdown
-     nlinum
-     org
+     ;; markdown
+     ;; org
      osx
-     python
-     react
-     restclient
-     search-engine
-     semantic
      (shell :variables
             shell-default-height 30
-            shell-default-position 'bottom)
+            shell-default-position 'bottom
+            shell-default-shell 'eshell)
      shell-scripts
-     spotify
+     ;; spell-checking
      syntax-checking
+     python
      version-control
+     vinegar
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(color-theme-sanityinc-tomorrow whole-line-or-region)
+   dotspacemacs-additional-packages '(color-theme-sanityinc-tomorrow)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(auto-yasnippet helm-c-yasnippet php-auto-yasnippets yasnippet)
+   dotspacemacs-excluded-packages '(auto-yasnippet helm-c-yasnippet yasnippet)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -118,7 +108,7 @@ values."
    ;; with `:variables' keyword (similar to layers). Check the editing styles
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
-   dotspacemacs-editing-style 'emacs
+   dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -142,13 +132,14 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-night)
+   dotspacemacs-themes '(sanityinc-tomorrow-night
+                         sanityinc-tomorrow-day)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 12
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -156,12 +147,12 @@ values."
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
    ;; (default "SPC")
-   dotspacemacs-emacs-command-key "M-SPC"
+   dotspacemacs-emacs-command-key "SPC"
    ;; The key used for Vim Ex commands (default ":")
    dotspacemacs-ex-command-key ":"
    ;; The leader key accessible in `emacs state' and `insert state'
    ;; (default "M-m")
-   dotspacemacs-emacs-leader-key "M-SPC"
+   dotspacemacs-emacs-leader-key "M-m"
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
    dotspacemacs-major-mode-leader-key ","
@@ -217,7 +208,7 @@ values."
    ;; in all non-asynchronous sources. If set to `source', preserve individual
    ;; source settings. Else, disable fuzzy matching in all sources.
    ;; (default 'always)
-   dotspacemacs-helm-use-fuzzy nil
+   dotspacemacs-helm-use-fuzzy 'always
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
    dotspacemacs-enable-paste-transient-state nil
@@ -306,10 +297,9 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  ; Keep .spacemacs.d/init.el free of custom variables:
+  ; Save custom variables in a separate file:
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (when (file-exists-p custom-file) (load custom-file))
-  )
+  (when (file-exists-p custom-file) (load custom-file)))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -319,52 +309,21 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (setq powerline-default-separator 'utf-8) ; No curves in the powerline.
-  (setq neo-theme 'arrow)                   ; Minimal NeoTree style.
+  ; No curves in the Powerline:
+  (setq powerline-default-separator 'utf-8)
+  ; Minimal NeoTree interface:
+  (setq neo-theme 'arrow)
+  (setq neo-banner-message nil)
+
   (setq git-gutter-fr+-side 'left-fringe)   ; Show Git diff indicators on the left.
   (fringe-mode '(nil . 0))                  ; Disable fringe on the right.
 
-  ; Slower scrolling:
+  (global-set-key (kbd "C-s") 'helm-swoop)  ; Use Helm filtering for searching.
+
+  ; Slower and smoother scrolling:
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-scroll-amount '(           2
-                                    ((shift) . 1)))
-  ; M-SPC is my leader, so use M-m to delete multiple spaces:
-  (global-set-key (kbd "M-m") 'just-one-space)
-
-  ; Copy/kill whole line if region is not selected:
-  (whole-line-or-region-mode t)
-  (diminish 'whole-line-or-region-mode)
-  (global-set-key (kbd "C-w") 'whole-line-or-region-kill-region)
-
-  ; Expand/contract region semantically:
-  (setq expand-region-fast-keys-enabled nil)
-  (setq expand-region-smart-cursor t)
-  (global-set-key (kbd "C-.") 'er/expand-region)
-  (global-set-key (kbd "C-,") 'er/contract-region)
-
-  ; Multiple cursors shortcuts:
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
-
-  ; Better search with Helm Swoop and other Helm goodness:
-  (global-set-key (kbd "C-s") 'helm-swoop)
-  (global-set-key (kbd "C-M-s") 'spacemacs/helm-swoop-region-or-symbol)
-  (global-set-key (kbd "C-r") 'helm-resume)
-  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-
-  ; Configuration for C-derived modes:
-  (add-hook 'c-mode-common-hook '(lambda()
-                                   (c-set-style "ellemtel")
-                                   (setq c-basic-offset 4)
-                                   (c-set-offset 'innamespace 0)
-                                   (c-set-offset 'access-label '/)))
-  ; Python shell temporary fix (upstream bug):
-  (setq python-shell-completion-native-enable nil)
-  (setq flycheck-python-pycompile-executable "python3")
-
-  (find-file "~/todo.org")  ; Open todo list after init.
-  )
+                                    ((shift) . 1))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
