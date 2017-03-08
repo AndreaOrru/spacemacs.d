@@ -38,24 +38,17 @@ values."
      ;; ----------------------------------------------------------------
      helm
      auto-completion
-     better-defaults
      dash
      emacs-lisp
      git
-     github
-     ;; markdown
-     ;; org
      osx
      (shell :variables
+            shell-default-shell 'eshell
             shell-default-height 30
-            shell-default-position 'bottom
-            shell-default-shell 'eshell)
-     shell-scripts
-     ;; spell-checking
+            shell-default-position 'bottom)
      syntax-checking
      python
      version-control
-     vinegar
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -124,7 +117,7 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '()
+   dotspacemacs-startup-lists nil
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -132,14 +125,13 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-night
-                         sanityinc-tomorrow-day)
+   dotspacemacs-themes '(sanityinc-tomorrow-night)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 12
+                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -208,7 +200,7 @@ values."
    ;; in all non-asynchronous sources. If set to `source', preserve individual
    ;; source settings. Else, disable fuzzy matching in all sources.
    ;; (default 'always)
-   dotspacemacs-helm-use-fuzzy 'always
+   dotspacemacs-helm-use-fuzzy nil
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
    dotspacemacs-enable-paste-transient-state nil
@@ -298,8 +290,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
   ; Save custom variables in a separate file:
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (when (file-exists-p custom-file) (load custom-file)))
+  (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+  (when (file-exists-p custom-file) (load custom-file))
+  )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -311,19 +304,24 @@ you should place your code here."
 
   ; No curves in the Powerline:
   (setq powerline-default-separator 'utf-8)
-  ; Minimal NeoTree interface:
-  (setq neo-theme 'arrow)
-  (setq neo-banner-message nil)
 
-  (setq git-gutter-fr+-side 'left-fringe)   ; Show Git diff indicators on the left.
-  (fringe-mode '(nil . 0))                  ; Disable fringe on the right.
-
-  (global-set-key (kbd "C-s") 'helm-swoop)  ; Use Helm filtering for searching.
-
-  ; Slower and smoother scrolling:
+  ; Slower and smoother mouse scrolling:
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-scroll-amount '(           2
-                                    ((shift) . 1))))
+                                    ((shift) . 1)))
+
+  ; Minimal Neotree interface:
+  (setq neo-theme 'arrow)
+  (setq neo-banner-message nil)
+  ; Show Git diff indicators on the left:
+  (setq git-gutter-fr+-side 'left-fringe)
+
+  ; Helm filtering for search:
+  (global-set-key (kbd "C-s") 'helm-swoop)
+
+  ; Fix for Python REPL:
+  (setq python-shell-completion-native-enable nil)
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
