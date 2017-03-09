@@ -44,7 +44,6 @@ values."
      haskell
      osx
      (shell :variables
-            shell-default-shell 'eshell
             shell-default-height 30
             shell-default-position 'bottom)
      syntax-checking
@@ -290,7 +289,7 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  ; Save custom variables in a separate file:
+  ;; Save custom variables in a separate file:
   (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
   (when (file-exists-p custom-file) (load custom-file))
   )
@@ -303,27 +302,33 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ; Slower and smoother mouse scrolling:
+  ;; Slower and smoother mouse scrolling:
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-scroll-amount '(           2
                                     ((shift) . 1)))
 
-  ; No curves in the Powerline:
+  ;; No curves in the Powerline:
   (setq powerline-default-separator 'utf-8)
-  ; Minimal Neotree interface:
+  ;; Minimal Neotree interface:
   (setq neo-theme 'arrow)
   (setq neo-banner-message nil)
-  ; Show Git diff indicators on the left:
+  ;; Show Git diff indicators on the left:
   (setq git-gutter-fr+-side 'left-fringe)
 
-  ; Filter autocompletion candidates while searching:
-  (setq company-search-filtering t)
-
-  ; Search by words ignoring the order in Ivy:
+  ;; Search by words ignoring the order in Ivy:
   (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
   (setq ivy-initial-inputs-alist nil)  ; No initial predefined inputs.
+  ;; Filter autocompletion candidates while searching:
+  (setq company-search-filtering t)
 
-  ; Fix for Python REPL:
+  ;; Workaround to make some keys normally in the terminal:
+  (add-hook 'term-mode-hook '(lambda()
+    (evil-local-set-key 'insert (kbd "C-a") '(lambda() (interactive) (term-send-home)))
+    (evil-local-set-key 'insert (kbd "C-e") '(lambda() (interactive) (term-send-end)))
+    (evil-local-set-key 'insert (kbd "C-c") '(lambda() (interactive) (term-send-raw-string "\C-c")))
+    (evil-local-set-key 'insert (kbd "C-r") '(lambda() (interactive) (term-send-reverse-search-history)))))
+
+  ;; Workaround for Python REPL warning:
   (setq python-shell-completion-native-enable nil)
   )
 
