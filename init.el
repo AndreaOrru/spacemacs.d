@@ -44,6 +44,7 @@ values."
      haskell
      osx
      (shell :variables
+            shell-default-shell 'multi-term
             shell-default-height 30
             shell-default-position 'bottom)
      syntax-checking
@@ -321,12 +322,12 @@ you should place your code here."
   ;; Filter autocompletion candidates while searching:
   (setq company-search-filtering t)
 
-  ;; Workaround to make some keys normally in the terminal:
+  ;; Workaround to make some keys behave normally in the terminal:
   (add-hook 'term-mode-hook '(lambda()
-    (evil-local-set-key 'insert (kbd "C-a") '(lambda() (interactive) (term-send-home)))
-    (evil-local-set-key 'insert (kbd "C-e") '(lambda() (interactive) (term-send-end)))
-    (evil-local-set-key 'insert (kbd "C-c") '(lambda() (interactive) (term-send-raw-string "\C-c")))
-    (evil-local-set-key 'insert (kbd "C-r") '(lambda() (interactive) (term-send-reverse-search-history)))))
+    (evil-local-set-key 'insert (kbd "C-a") 'term-send-home)
+    (evil-local-set-key 'insert (kbd "C-e") 'term-send-end)
+    (evil-local-set-key 'insert (kbd "C-c") 'term-interrupt-subjob)
+    (evil-local-set-key 'insert (kbd "C-r") 'term-send-reverse-search-history)))
 
   ;; Workaround for Python REPL warning:
   (setq python-shell-completion-native-enable nil)
