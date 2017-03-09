@@ -36,11 +36,12 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
+     ivy
      auto-completion
      dash
      emacs-lisp
      git
+     haskell
      osx
      (shell :variables
             shell-default-shell 'eshell
@@ -54,11 +55,11 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(color-theme-sanityinc-tomorrow)
+   dotspacemacs-additional-packages '(gotham-theme)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(auto-yasnippet helm-c-yasnippet yasnippet)
+   dotspacemacs-excluded-packages '(auto-yasnippet haskell-snippets helm-c-yasnippet yasnippet)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -125,7 +126,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-night)
+   dotspacemacs-themes '(gotham)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -200,7 +201,7 @@ values."
    ;; in all non-asynchronous sources. If set to `source', preserve individual
    ;; source settings. Else, disable fuzzy matching in all sources.
    ;; (default 'always)
-   dotspacemacs-helm-use-fuzzy nil
+   dotspacemacs-helm-use-fuzzy 'always
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
    dotspacemacs-enable-paste-transient-state nil
@@ -302,22 +303,25 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ; No curves in the Powerline:
-  (setq powerline-default-separator 'utf-8)
-
   ; Slower and smoother mouse scrolling:
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-scroll-amount '(           2
                                     ((shift) . 1)))
 
+  ; No curves in the Powerline:
+  (setq powerline-default-separator 'utf-8)
   ; Minimal Neotree interface:
   (setq neo-theme 'arrow)
   (setq neo-banner-message nil)
   ; Show Git diff indicators on the left:
   (setq git-gutter-fr+-side 'left-fringe)
 
-  ; Helm filtering for search:
-  (global-set-key (kbd "C-s") 'helm-swoop)
+  ; Filter autocompletion candidates while searching:
+  (setq company-search-filtering t)
+
+  ; Search by words ignoring the order in Ivy:
+  (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+  (setq ivy-initial-inputs-alist nil)  ; No initial predefined inputs.
 
   ; Fix for Python REPL:
   (setq python-shell-completion-native-enable nil)
