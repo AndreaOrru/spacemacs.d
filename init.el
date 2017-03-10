@@ -36,7 +36,7 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ivy
+     helm
      auto-completion
      dash
      emacs-lisp
@@ -201,7 +201,7 @@ values."
    ;; in all non-asynchronous sources. If set to `source', preserve individual
    ;; source settings. Else, disable fuzzy matching in all sources.
    ;; (default 'always)
-   dotspacemacs-helm-use-fuzzy 'always
+   dotspacemacs-helm-use-fuzzy nil
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
    dotspacemacs-enable-paste-transient-state nil
@@ -307,7 +307,6 @@ you should place your code here."
   (setq mouse-wheel-progressive-speed nil)
   (setq mouse-wheel-scroll-amount '(           2
                                     ((shift) . 1)))
-
   ;; No curves in the Powerline:
   (setq powerline-default-separator 'utf-8)
   ;; Minimal Neotree interface:
@@ -316,21 +315,21 @@ you should place your code here."
   ;; Show Git diff indicators on the left:
   (setq git-gutter-fr+-side 'left-fringe)
 
-  ;; Search by words ignoring the order in Ivy:
-  (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
-  (setq ivy-initial-inputs-alist nil)  ; No initial predefined inputs.
-  ;; Filter autocompletion candidates while searching:
-  (setq company-search-filtering t)
-
-  ;; Workaround to make some keys behave normally in the terminal:
-  (add-hook 'term-mode-hook '(lambda()
-    (evil-local-set-key 'insert (kbd "C-a") 'term-send-home)
-    (evil-local-set-key 'insert (kbd "C-e") 'term-send-end)
-    (evil-local-set-key 'insert (kbd "C-c") 'term-interrupt-subjob)
-    (evil-local-set-key 'insert (kbd "C-r") 'term-send-reverse-search-history)))
+  ;; Search with Helm filtering:
+  (global-set-key (kbd "C-s") 'helm-swoop)
 
   ;; Workaround for Python REPL warning:
   (setq python-shell-completion-native-enable nil)
+  ;; Workaround to make some keys behave normally in the terminal:
+  (add-hook 'term-mode-hook '(lambda()
+    (evil-local-set-key 'insert (kbd "C-c") 'term-interrupt-subjob)
+    (evil-local-set-key 'insert (kbd "C-r") 'term-send-reverse-search-history)
+    (evil-local-set-key 'insert (kbd "C-a") 'term-send-home)
+    (evil-local-set-key 'insert (kbd "C-e") 'term-send-end)
+    (evil-local-set-key 'insert (kbd "C-p") 'term-send-up)
+    (evil-local-set-key 'insert (kbd "C-n") 'term-send-down)
+    (evil-local-set-key 'insert (kbd "C-d") 'term-send-del)
+    (evil-local-set-key 'insert (kbd "C-k") '(lambda() (interactive) (term-send-raw-string "\C-k")))))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
