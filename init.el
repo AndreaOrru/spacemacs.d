@@ -41,6 +41,8 @@ values."
      dash
      emacs-lisp
      git
+     (haskell :variables
+              haskell-completion-backend 'intero)
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 30
