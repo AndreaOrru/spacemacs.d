@@ -12,8 +12,7 @@ values."
    ;; or `spacemacs'. (default 'spacemacs)
    dotspacemacs-distribution 'spacemacs
    ;; Lazy installation of layers (i.e. layers are installed only when a file
-   ;; with a supported type is opened). Possible values are `all', `unused'
-   ;; and `nil'. `unused' will lazy install only unused layers (i.e. layers
+   ;; with a supported type is opened). Possible values are `all', `unused';; and `nil'. `unused' will lazy install only unused layers (i.e. layers
    ;; not listed in variable `dotspacemacs-configuration-layers'), `all' will
    ;; lazy install any layer that support lazy installation even the layers
    ;; listed in `dotspacemacs-configuration-layers'. `nil' disable the lazy
@@ -40,9 +39,10 @@ values."
      auto-completion
      dash
      emacs-lisp
-     git
      (haskell :variables
               haskell-completion-backend 'intero)
+     git
+     osx
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 30
@@ -132,7 +132,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 24
+                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -324,7 +324,7 @@ you should place your code here."
   (setq mouse-wheel-scroll-amount '(           2
                                     ((shift) . 1)))
   ;; No curves in the Powerline:
-  (setq powerline-default-separator 'arrow)
+  (setq powerline-default-separator 'utf-8)
   ;; Minimal Neotree interface:
   (setq neo-theme 'arrow)
   (setq neo-banner-message nil)
@@ -333,6 +333,8 @@ you should place your code here."
 
   ;; Search with Helm filtering:
   (global-set-key (kbd "C-s") 'helm-swoop)
+  ;; Enable multiple cursors everywhere:
+  (global-evil-mc-mode t)
 
   ;; Workaround for Python REPL warning:
   (setq python-shell-completion-native-enable nil)
