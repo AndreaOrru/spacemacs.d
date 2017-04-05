@@ -45,7 +45,7 @@ values."
      git
      osx
      (shell :variables
-            shell-default-shell 'eshell
+            shell-default-shell 'multi-term
             shell-default-height 30
             shell-default-position 'bottom)
      syntax-checking
@@ -127,7 +127,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-blue)
+   dotspacemacs-themes '(sanityinc-tomorrow-night)
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -233,7 +233,7 @@ values."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -334,9 +334,13 @@ you should place your code here."
 
   ;; Search with Helm filtering:
   (global-set-key (kbd "C-s") 'helm-swoop)
+  ;; Respect camel case:
+  (global-subword-mode)
   ;; Enable multiple cursors everywhere:
   (global-evil-mc-mode t)
 
+  ;; Workaround for multiple cursor shapes on macOS:
+  (setq evil-mc-enable-bar-cursor nil)
   ;; Workaround for Python REPL warning:
   (setq python-shell-completion-native-enable nil)
   )
