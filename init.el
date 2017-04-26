@@ -318,6 +318,7 @@ you should place your code here."
   ;; Minimal Neotree interface.
   (setq neo-theme 'arrow)
   (setq neo-banner-message nil)
+  (setq neo-vc-integration '(face))
   ;; Show Git diff indicators on the left.
   (setq git-gutter-fr+-side 'left-fringe)
 
